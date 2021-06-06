@@ -1,8 +1,13 @@
 require('dotenv').config()
 const bcrypt = require('bcrypt')
 const jwt = require('jsonwebtoken')
+const mongoose = require('mongoose')
 
-const posts = [
+mongoose.connect(process.env.MONGODB_URL, { useNewUrlParser: true })
+mongoose.connection
+    .once('open', () => console.log('Connected MongoDB'))
+
+const users = [
     {
         'name': 'Ritesh',
         'password': 'ritesh@'
@@ -15,14 +20,14 @@ const posts = [
 
 getAllusers = (req, res) => {
     //return data only of authorized users
-    res.json(posts.filter(user => user.name === req.user.name));
+    res.json(users.filter(user => user.name === req.user.name));
 }
 
 registerUser = async (req, res) => {
     try {
         const hashedPassword = await bcrypt.hash(req.body.password, 10);
         const user = { name: req.body.name, password: hashedPassword };
-        posts.push(user);
+        users.push(user);
         res.status(201).send();
     } catch {
         res.status(500).send();
@@ -30,7 +35,7 @@ registerUser = async (req, res) => {
 }
 
 loginUser = async (req, res) => {
-    const user = posts.find(user => user.name === req.body.name);
+    const user = users.find(user => user.name === req.body.name);
     if (user == null) {
         return res.status(400).send({ message: 'Incorrect username or password' });
     }
