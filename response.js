@@ -6,16 +6,21 @@ exports.success = (message, body, statusCode) => {
     }
 }
 
-exports.error = (message, errors, statusCode) => {
+exports.failure = (errors, statusCode) => {
     const codes = [200, 201, 400, 401, 404, 403, 422, 500];
-    const findCode = codes.find((code) => code == statusCode)
+    var findCode = codes.find((code) => code == statusCode)
 
-    if (!findCode) findCode = 500
-    else statusCode = findCode
+    if (statusCode == 500) {
+        errors = [
+            {
+                errorType: 'ServerFailure',
+                message: 'Internal server error',
+            }
+        ]
+    }
 
     return {
-        message,
-        status: statusCode,
+        'message': 'failed',
         errors
     }
 }
