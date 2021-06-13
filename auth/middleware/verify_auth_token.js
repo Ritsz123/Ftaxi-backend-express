@@ -5,9 +5,9 @@ function verifyAuthenticationToken(req, res, next) {
     const token = authHeader && authHeader.split(' ')[1];
     if (token == null) res.sendStatus(401);
 
-    jwt.verify(token, process.env.JWT_TOKEN_SECRET, (err, user) => {
+    jwt.verify(token, process.env.JWT_TOKEN_SECRET, (err, userEmail) => {
         if (err) return res.status(403);
-        req.user = user;
+        req.userEmail = userEmail;
         next();
     });
 }
