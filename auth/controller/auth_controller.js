@@ -3,15 +3,13 @@ const bcrypt = require('bcrypt')
 const jwt = require('jsonwebtoken')
 const mongoose = require('mongoose')
 const { success, failure } = require('../../response')
-const RiderModel = require('../models/userModel')
+const RiderModel = require('../models/riderModel')
 
 
 mongoose.connect(process.env.MONGODB_URL, { useNewUrlParser: true, useUnifiedTopology: true })
     .then(() => console.log('Connected to MongoDB'))
     .catch((err) => console.log(err))
 
-
-const users = []
 
 getAllusers = async (req, res) => {
     //return data only of authorized users
@@ -24,10 +22,18 @@ getAllusers = async (req, res) => {
 registerUser = async (req, res) => {
     try {
         const hashedPassword = await bcrypt.hash(req.body.password, 10)
-        const requestBody = { email: req.body.email, password: hashedPassword }
+        const requestBody = {
+            email: req.body.email,
+            password: hashedPassword,
+            phone: req.body.phone,
+            name: req.body.name,
+        }
+
+        // console.log(requestBody)
+
         var user = new RiderModel(requestBody)
         user.save().then(item => res.status(201).json(success('created')))
-            .catch(err => res.status(400).json(failure()))
+            .catch(err => res.status(400).json(failure(err)))
 
     } catch {
         res.status(500).json(failure())
@@ -36,7 +42,6 @@ registerUser = async (req, res) => {
 
 loginUser = async (req, res) => {
     const user = await RiderModel.findOne({ email: req.body.email })
-    // console.log(user['password'])
     const authErrorBody = [
         {
             errorType: 'Authentication Error',
