@@ -5,11 +5,14 @@ const verifyAuthenticationToken = require('../middleware/verify_auth_token')
 const authController = require('../controller/auth_controller')
 
 
-router.get('/allusers', verifyAuthenticationToken, authController.getAllusers);
+router.get('/allusers', verifyAuthenticationToken, authController.getAllusers)
 
-router.post('/register', authController.registerUser);
+router.post('/rider/register', authController.registerRider)
 
-router.post('/login', authController.loginUser);
+router.post('/rider/login', authController.loginRider)
 
+router.post('/driver/register', authController.registerDriver)
 
-module.exports = router;
+router.post('/driver/login', authController.loginDriver)
+
+module.exports = router

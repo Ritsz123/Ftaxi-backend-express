@@ -9,10 +9,10 @@ app.use('/api/auth', authRoutes)
 app.get('/', (req, res) => {
     const responseBody = [
         {
-            data: 'Hello world'
+            server_running: true,
         },
         {
-            data: 'No world'
+            data: 'Test'
         },
     ]
 
