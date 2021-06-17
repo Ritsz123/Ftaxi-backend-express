@@ -5,19 +5,11 @@ const mongoose = require('mongoose')
 const { success, failure } = require('../../response')
 const RiderModel = require('../models/riderModel')
 const DriverModel = require('../models/driverModel')
-
+const { authErrorBody, emailExistsError } = require('../../errors/errors')
 
 mongoose.connect(process.env.MONGODB_URL, { useNewUrlParser: true, useUnifiedTopology: true })
     .then(() => console.log('Connected to MongoDB'))
     .catch((err) => console.log(err))
-
-const authErrorBody = [
-    {
-        errorType: 'Authentication Error',
-        message: 'Incorrect username or password'
-    }
-];
-
 
 getAllusers = async (req, res) => {
     //return data only of authorized users
@@ -26,6 +18,11 @@ getAllusers = async (req, res) => {
 }
 
 registerRider = async (req, res) => {
+    var exist = await emailExists(req.body.email)
+    if (exist) {
+        return res.status(400).json(failure([emailExistsError]))
+    }
+
     try {
         const hashedPassword = await bcrypt.hash(req.body.password, 10)
         req.body.password = hashedPassword;
@@ -44,7 +41,7 @@ loginRider = async (req, res) => {
     const user = await RiderModel.findOne({ email: req.body.email })
 
     if (user == null) {
-        return res.status(400).json(failure(authErrorBody))
+        return res.status(400).json(failure([authErrorBody]))
     }
     try {
         if (await bcrypt.compare(req.body.password, user['password'])) {
@@ -56,7 +53,7 @@ loginRider = async (req, res) => {
 
             return res.status(200).json(success('success', responseBody))
         } else {
-            return res.status(400).json(failure(authErrorBody))
+            return res.status(400).json(failure([authErrorBody]))
         }
     } catch {
         return res.status(500).json(failure())
@@ -64,6 +61,11 @@ loginRider = async (req, res) => {
 }
 
 registerDriver = async (req, res) => {
+    var exist = await emailExists(req.body.email)
+    if (exist) {
+        return res.status(400).json(failure([emailExistsError]))
+    }
+
     try {
         const hashedPassword = await bcrypt.hash(req.body.password, 10)
 
@@ -81,7 +83,7 @@ loginDriver = async (req, res) => {
     const user = await DriverModel.findOne({ email: req.body.email })
 
     if (user == null) {
-        return res.status(400).json(failure(authErrorBody))
+        return res.status(400).json(failure([authErrorBody]))
     }
 
     try {
@@ -94,11 +96,21 @@ loginDriver = async (req, res) => {
 
             return res.status(200).json(success('success', responseBody))
         } else {
-            return res.status(400).json(failure(authErrorBody))
+            return res.status(400).json(failure([authErrorBody]))
         }
     } catch {
         return res.status(500).json(failure())
     }
+}
+
+async function emailExists(email) {
+    //check in rider
+    var inRider = await RiderModel.findOne({ email: email })
+    var inDriver = await DriverModel.findOne({ email: email })
+
+    if (inRider == null && inDriver == null) return false
+
+    return true
 }
 
 module.exports = { getAllusers, registerRider, loginRider, registerDriver, loginDriver }
