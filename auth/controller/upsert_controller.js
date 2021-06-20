@@ -1,6 +1,6 @@
-const RiderModel = require('../models/riderModel')
 const { invalidToken } = require('../../errors/errors')
-const { failure } = require('../../response')
+const { failure, success } = require('../../response')
+const RiderModel = require('../models/riderModel')
 
 
 upsertRiderData = async (req, res) => {
@@ -8,7 +8,19 @@ upsertRiderData = async (req, res) => {
     if (resp == null) {
         return res.json(failure(invalidToken))
     }
-    return res.json(resp)
+
+    const body = {
+        name: req.body.name,
+    };
+
+    const done = await RiderModel.updateOne(
+        { email: req.userEmail },
+        body
+    )
+
+    console.log('update success', done)
+
+    return res.status(200).json(success('update success'))
 }
 
 module.exports = { upsertRiderData }
