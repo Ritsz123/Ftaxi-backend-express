@@ -23,6 +23,10 @@ const driverSchema = mongoose.Schema({
         type: String,
         required: true
     },
+    available: {
+        type: Boolean,
+        default: true
+    },
     vehicle_details: {
         reg_number: String,
         model: String,

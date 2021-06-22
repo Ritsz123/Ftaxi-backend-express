@@ -70,4 +70,20 @@ updateDriverName = async (req, res) => {
     res.status(200).json(success('update Success'))
 }
 
-module.exports = { updateRiderName, updateDriverName, addRiderAddress }
+updateDriverAvailability = async (req, res) => {
+    const driver = DriverModel.findOne({ email: req.userEmail })
+    if (driver == null) {
+        return res.json(failure(invalidToken))
+    }
+
+    const update = await DriverModel.updateOne(
+        { email: req.userEmail },
+        { available: req.body.available }
+    )
+
+    console.log('update driver status success', update)
+
+    res.status(201).json(success('success'))
+}
+
+module.exports = { updateRiderName, updateDriverName, addRiderAddress, updateDriverAvailability }
