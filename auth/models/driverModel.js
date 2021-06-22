@@ -32,7 +32,7 @@ const driverSchema = mongoose.Schema({
         model: String,
         vehicle_verified: {
             type: Boolean,
-            default: false
+            default: true
         }
     }
 })

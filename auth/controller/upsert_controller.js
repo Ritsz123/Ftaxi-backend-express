@@ -51,39 +51,67 @@ addRiderAddress = async (req, res) => {
 }
 
 updateDriverName = async (req, res) => {
-    const resp = DriverModel.findOne({ email: req.userEmail })
+    const resp = await DriverModel.findOne({ email: req.userEmail })
     if (resp == null) {
         return res.json(failure(invalidToken))
     }
 
-    const body = {
-        name: req.body.name,
-    };
+    if (req.body.name != null) {
+        const done = await DriverModel.updateOne(
+            { email: req.userEmail },
+            { name: req.body.name }
+        )
 
-    const done = await DriverModel.updateOne(
-        { email: req.userEmail },
-        body
-    )
+        console.log('update success', done);
 
-    console.log('update success', done);
+        return res.status(200).json(success('update Success'))
+    }
 
-    res.status(200).json(success('update Success'))
+    return res.json(failure('Invalid request data'))
 }
 
 updateDriverAvailability = async (req, res) => {
-    const driver = DriverModel.findOne({ email: req.userEmail })
+    const driver = await DriverModel.findOne({ email: req.userEmail })
     if (driver == null) {
         return res.json(failure(invalidToken))
     }
 
+    const status = req.body.available
+    if (status != null) {
+        const update = await DriverModel.updateOne(
+            { email: req.userEmail },
+            { available: req.body.available }
+        )
+
+        console.log('update driver status success', update)
+
+        return res.json(success('success'))
+    }
+
+    return res.json(failure('Invalid request data'))
+}
+
+updateDriverVehicleDetails = async (req, res) => {
+    const driver = await DriverModel.findOne({ email: req.userEmail })
+    if (driver == null) {
+        return res.json(failure(invalidToken))
+    }
+
+    const vehicle = {
+        "reg_number": req.body.reg_number,
+        "model": req.body.model
+    }
+
+    console.log(vehicle)
+
     const update = await DriverModel.updateOne(
         { email: req.userEmail },
-        { available: req.body.available }
+        { vehicle_details: vehicle }
     )
 
-    console.log('update driver status success', update)
+    console.log('update vehicle success', update)
 
     res.status(201).json(success('success'))
 }
 
-module.exports = { updateRiderName, updateDriverName, addRiderAddress, updateDriverAvailability }
+module.exports = { updateRiderName, updateDriverName, addRiderAddress, updateDriverAvailability, updateDriverVehicleDetails }
