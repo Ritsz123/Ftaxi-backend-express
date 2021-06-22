@@ -4,7 +4,7 @@ const RiderModel = require('../models/riderModel')
 const DriverModel = require('../models/driverModel')
 
 
-upsertRiderData = async (req, res) => {
+updateRiderName = async (req, res) => {
     const resp = await RiderModel.findOne({ email: req.userEmail })
     if (resp == null) {
         return res.json(failure(invalidToken))
@@ -24,7 +24,33 @@ upsertRiderData = async (req, res) => {
     return res.status(200).json(success('update success'))
 }
 
-upsertDriverData = async (req, res) => {
+addRiderAddress = async (req, res) => {
+    const rider = await RiderModel.findOne({ email: req.userEmail })
+    if (rider == null) {
+        return res.json(failure(invalidToken))
+    }
+
+    const address = {
+        placeName: req.body.placeName,
+        placeId: req.body.placeId,
+        latlng: {
+            lat: req.body.latlng.lat,
+            lng: req.body.latlng.lng,
+        },
+        formattedPlaceAddress: req.body.formattedPlaceAddress
+    }
+
+    const update = await RiderModel.updateOne(
+        { email: req.userEmail },
+        { $push: { saved_addresses: address } }
+    )
+
+    console.log('Added address to saved addresses', update)
+
+    return res.status(201).json(success('Update Success'))
+}
+
+updateDriverName = async (req, res) => {
     const resp = DriverModel.findOne({ email: req.userEmail })
     if (resp == null) {
         return res.json(failure(invalidToken))
@@ -44,4 +70,4 @@ upsertDriverData = async (req, res) => {
     res.status(200).json(success('update Success'))
 }
 
-module.exports = { upsertRiderData, upsertDriverData }
+module.exports = { updateRiderName, updateDriverName, addRiderAddress }

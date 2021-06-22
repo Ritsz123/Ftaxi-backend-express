@@ -6,7 +6,7 @@ const { success, failure } = require('./response')
 
 app.use(express.json())
 app.use('/api/auth', authRoutes)
-app.use('/api/upsert', upsertRoutes)
+app.use('/api/update', upsertRoutes)
 
 app.get('/', (req, res) => {
     const responseBody = [
