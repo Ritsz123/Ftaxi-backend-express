@@ -1,5 +1,15 @@
 const mongoose = require('mongoose')
 
+const addressModel = {
+    placeName: String,
+    placeId: String,
+    latlng: {
+        lat: Number,
+        lng: Number,
+    },
+    formatted_place_address: String
+};
+
 const riderSchema = mongoose.Schema({
     name: {
         type: String,
@@ -23,15 +33,13 @@ const riderSchema = mongoose.Schema({
         type: Boolean,
         default: false
     },
-    saved_addresses: [{
-        placeName: String,
-        placeId: String,
-        latlng: {
-            lat: Number,
-            lng: Number,
-        },
-        formattedPlaceAddress: String
+    ride_history: [{
+        source_address: addressModel,
+        destination_address: addressModel,
     }],
+    saved_addresses: [
+        addressModel
+    ],
 })
 
 const RiderModel = mongoose.model('Rider', riderSchema)
