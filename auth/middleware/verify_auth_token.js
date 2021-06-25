@@ -8,6 +8,7 @@ function verifyAuthenticationToken(req, res, next) {
     if (token == null) res.sendStatus(401);
 
     jwt.verify(token, process.env.JWT_TOKEN_SECRET, (err, userEmail) => {
+        // console.log('ERROR : ', err)
         if (err) return res.status(403);
 
         if (req.params['email'] != null && req.params['email'] != userEmail) {
@@ -18,7 +19,8 @@ function verifyAuthenticationToken(req, res, next) {
         next();
     });
 
-    return res.status(403).json(failure(invalidToken))
+    //TODO: handle case for manipulated token
+    // return res.status(403).json(failure(invalidToken))
 }
 
 module.exports = verifyAuthenticationToken;

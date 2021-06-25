@@ -5,5 +5,5 @@ module.exports = {
         lat: Number,
         lng: Number,
     },
-    formatted_place_address: String
+    formattedPlaceAddress: String
 };
