@@ -1,14 +1,5 @@
 const mongoose = require('mongoose')
-
-const addressModel = {
-    placeName: String,
-    placeId: String,
-    latlng: {
-        lat: Number,
-        lng: Number,
-    },
-    formatted_place_address: String
-};
+const addressModel = require('./addressModel')
 
 const riderSchema = mongoose.Schema({
     name: {
