@@ -17,6 +17,8 @@ function verifyAuthenticationToken(req, res, next) {
         req.userEmail = userEmail;
         next();
     });
+
+    return res.status(403).json(failure(invalidToken))
 }
 
 module.exports = verifyAuthenticationToken;
