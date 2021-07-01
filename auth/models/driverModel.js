@@ -1,4 +1,5 @@
 const mongoose = require('mongoose')
+const addressModel = require('./addressModel')
 
 const driverSchema = mongoose.Schema({
     name: {
@@ -27,6 +28,11 @@ const driverSchema = mongoose.Schema({
         type: Boolean,
         default: true
     },
+    ride_history: [{
+        rider: mongoose.Types.ObjectId,
+        source_address: addressModel,
+        destination_address: addressModel,
+    }],
     vehicle_details: {
         reg_number: String,
         model: String,

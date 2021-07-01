@@ -3,12 +3,14 @@ const app = express()
 const authRoutes = require('./auth/routes/authRoutes')
 const upsertRoutes = require('./auth/routes/upsertRoutes')
 const googleRoutes = require('./externalApi/routes/googleroutes')
+const tripRoutes = require('./auth/routes/tripRoutes')
 const { success, failure } = require('./response')
 
 app.use(express.json())
 app.use('/api/auth', authRoutes)
 app.use('/api/update', upsertRoutes)
 app.use('/api/google', googleRoutes)
+app.use('/api/trips', tripRoutes)
 
 app.get('/', (req, res) => {
     const responseBody = [

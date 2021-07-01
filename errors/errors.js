@@ -12,3 +12,8 @@ exports.invalidToken = {
     errorType: 'Invalid Token',
     message: 'Email and token Mismatch.'
 }
+
+exports.invalidParameters = {
+    errorType: 'invalid body / query parameters',
+    message: 'please check the body / query parameters'
+}

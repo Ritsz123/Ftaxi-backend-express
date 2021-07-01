@@ -25,6 +25,7 @@ const riderSchema = mongoose.Schema({
         default: false
     },
     ride_history: [{
+        driver: mongoose.Types.ObjectId,
         source_address: addressModel,
         destination_address: addressModel,
     }],
