@@ -8,4 +8,6 @@ router.get('/driver', verifyAuthenticationToken, tripController.getDriverTrips)
 
 router.get('/rider', verifyAuthenticationToken, tripController.getRiderTrips)
 
+router.put('/addTrip', verifyAuthenticationToken, tripController.addTripDetails)
+
 module.exports = router

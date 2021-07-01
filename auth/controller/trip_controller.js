@@ -30,4 +30,44 @@ getRiderTrips = async (req, res) => {
     res.json(rideHistory)
 }
 
-module.exports = { getDriverTrips, getRiderTrips }
+addTripDetails = async (req, res) => {
+    const riderId = req.body.riderId
+    const driverId = req.body.driverId
+    const source_address = req.body.source_address
+    const destination_address = req.body.destination_address
+
+    const updated = await RiderModel.updateOne(
+        { _id: riderId },
+        {
+            $push: {
+                ride_history: {
+                    driver: driverId,
+                    source_address: source_address,
+                    destination_address: destination_address
+                }
+            }
+        }
+    )
+
+    console.log('pushed data to rider ', updated)
+
+    const updatedDriver = await DriverModel.updateOne(
+        { _id: driverId },
+        {
+            $push: {
+                ride_history: {
+                    rider: riderId,
+                    source_address: source_address,
+                    destination_address: destination_address
+                }
+            }
+        }
+    )
+
+    console.log('pushed data to driver', updatedDriver)
+
+    res.json(success('ok'))
+
+}
+
+module.exports = { getDriverTrips, getRiderTrips, addTripDetails }
