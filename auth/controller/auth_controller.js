@@ -11,7 +11,7 @@ mongoose.connect(process.env.MONGODB_URL, { useNewUrlParser: true, useUnifiedTop
     .then(() => console.log('Connected to MongoDB'))
     .catch((err) => console.log(err))
 
-getAllusers = async (req, res) => {
+getUserDetails = async (req, res) => {
     //return data only of authorized users
     const resp = await RiderModel.find({ email: req.userEmail }, { password: 0 })
     res.status(200).json(success('success', resp))
@@ -113,4 +113,4 @@ async function emailExists(email) {
     return true
 }
 
-module.exports = { getAllusers, registerRider, loginRider, registerDriver, loginDriver }
+module.exports = { getUserDetails, registerRider, loginRider, registerDriver, loginDriver }
