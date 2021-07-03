@@ -30,7 +30,15 @@ getRiderTrips = async (req, res) => {
     res.json(rideHistory)
 }
 
+// * only called by driver
 addTripDetails = async (req, res) => {
+
+    const user = DriverModel.findOne({ email: req.userEmail })
+
+    if (user == null) {
+        return res.status(401).json(failure('Unauthorised'))
+    }
+
     const riderId = req.body.riderId
     const driverId = req.body.driverId
     const source_address = req.body.source_address
