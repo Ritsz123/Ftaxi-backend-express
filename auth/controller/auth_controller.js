@@ -5,6 +5,7 @@ const mongoose = require('mongoose')
 const { success, failure } = require('../../response')
 const RiderModel = require('../models/riderModel')
 const DriverModel = require('../models/driverModel')
+const generateAuthenticationToken = require('../middleware/generate_auth_token')
 const { authErrorBody, emailExistsError } = require('../../errors/errors')
 
 mongoose.connect(process.env.MONGODB_URL, { useNewUrlParser: true, useUnifiedTopology: true })
@@ -29,11 +30,12 @@ registerRider = async (req, res) => {
         // console.log(requestBody)
 
         var user = new RiderModel(req.body)
-        user.save().then(item => res.status(201).json(success('created')))
-            .catch(err => res.status(400).json(failure(err)))
+        const createdUser = await user.save()
+        const token = generateAuthenticationToken(user['email'])
+        res.status(201).json(success('user registered', { token: token }))
 
-    } catch {
-        res.status(500).json(failure())
+    } catch (err) {
+        res.status(500).json(failure(err))
     }
 }
 
@@ -45,7 +47,7 @@ loginRider = async (req, res) => {
     }
     try {
         if (await bcrypt.compare(req.body.password, user['password'])) {
-            const token = jwt.sign(user['email'], process.env.JWT_TOKEN_SECRET)
+            const token = generateAuthenticationToken(user['email'])
 
             const responseBody = {
                 auth_token: token
@@ -72,8 +74,9 @@ registerDriver = async (req, res) => {
         req.body.password = hashedPassword
 
         var user = new DriverModel(req.body)
-        user.save().then(item => res.status(201).json(success('created')))
-            .catch(err => res.status(400).json(failure(err)))
+        const createdUser = await user.save()
+        const token = generateAuthenticationToken(user['email'])
+        res.status(201).json(success('created', { token: token }))
     } catch {
         res.status(500).json(failure())
     }
@@ -88,7 +91,7 @@ loginDriver = async (req, res) => {
 
     try {
         if (await bcrypt.compare(req.body.password, user['password'])) {
-            const token = jwt.sign(user['email'], process.env.JWT_TOKEN_SECRET)
+            const token = generateAuthenticationToken(user['email'])
 
             const responseBody = {
                 auth_token: token
