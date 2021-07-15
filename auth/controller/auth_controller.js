@@ -1,6 +1,5 @@
 require('dotenv').config()
 const bcrypt = require('bcrypt')
-const jwt = require('jsonwebtoken')
 const mongoose = require('mongoose')
 const { success, failure } = require('../../response')
 const RiderModel = require('../models/riderModel')
@@ -49,11 +48,7 @@ loginRider = async (req, res) => {
         if (await bcrypt.compare(req.body.password, user['password'])) {
             const token = generateAuthenticationToken(user['email'])
 
-            const responseBody = {
-                auth_token: token
-            }
-
-            return res.status(200).json(success('success', responseBody))
+            return res.status(200).json(success('success', { token: token }))
         } else {
             return res.status(400).json(failure([authErrorBody]))
         }
