@@ -4,8 +4,7 @@ const router = express.Router()
 const verifyAuthenticationToken = require('../middleware/verify_auth_token')
 const authController = require('../controller/auth_controller')
 
-//! temp route
-router.get('/details', verifyAuthenticationToken, authController.getUserDetails)
+router.get('/getUserProfile', verifyAuthenticationToken, authController.getUserDetails)
 
 router.post('/rider/register', authController.registerRider)
 

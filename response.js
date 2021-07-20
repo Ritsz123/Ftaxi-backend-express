@@ -1,7 +1,6 @@
-exports.success = (message, body, statusCode) => {
+exports.success = (message, body) => {
     return {
         message,
-        status: statusCode,
         body
     }
 }

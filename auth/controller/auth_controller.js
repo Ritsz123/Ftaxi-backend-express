@@ -13,7 +13,7 @@ mongoose.connect(process.env.MONGODB_URL, { useNewUrlParser: true, useUnifiedTop
 
 getUserDetails = async (req, res) => {
     //return data only of authorized users
-    const resp = await RiderModel.find({ email: req.userEmail }, { password: 0 })
+    const resp = await RiderModel.findOne({ email: req.userEmail }, { password: 0 })
     res.status(200).json(success('success', resp))
 }
 
