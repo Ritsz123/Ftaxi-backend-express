@@ -51,4 +51,27 @@ latlngDetails = async (req, res) => {
     }
 }
 
-module.exports = { searchPlace, placeDetails, latlngDetails }
+routeDetails = async (req, res) => {
+    try {
+
+        const sourceLatLng = req.query.sourceLatLng
+        const destLatLng = req.query.destLatLng
+
+        if (sourceLatLng == null || destLatLng == null) {
+            return res.status(400).json(failure('invalid source & destination coordinates'))
+        }
+
+        const srcCordinates = sourceLatLng.split(',')
+        const destCordinates = destLatLng.split(',')
+
+        const response = await got(`https://maps.googleapis.com/maps/api/directions/json?origin=${srcCordinates[0]},${srcCordinates[1]}&destination=${destCordinates[0]},${destCordinates[1]}&mode=driving&key=${billingMapKey}`)
+
+        res.json(success('ok', JSON.parse(response.body)))
+
+    } catch (err) {
+        console.log(err)
+        return res.status(500).json(err)
+    }
+}
+
+module.exports = { searchPlace, placeDetails, latlngDetails, routeDetails }

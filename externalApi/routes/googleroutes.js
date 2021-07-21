@@ -7,6 +7,6 @@ const googleApiController = require('../controller/googleApiController')
 router.get('/searchplace', verifyAuthenticationToken, googleApiController.searchPlace)
 router.get('/placedetails', verifyAuthenticationToken, googleApiController.placeDetails)
 router.get('/latlngdetails', verifyAuthenticationToken, googleApiController.latlngDetails)
-
+router.get('/routedetails', verifyAuthenticationToken, googleApiController.routeDetails)
 
 module.exports = router
