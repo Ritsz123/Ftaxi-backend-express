@@ -32,4 +32,23 @@ placeDetails = async (req, res) => {
     }
 }
 
-module.exports = { searchPlace, placeDetails }
+latlngDetails = async (req, res) => {
+    try {
+        const lat = req.query.lat
+        const lng = req.query.lng
+
+        if (lat == null || lng == null) {
+            return res.status(400).json(failure('Invalid lat, lng values'));
+        }
+
+        const response = await got(`https://maps.googleapis.com/maps/api/geocode/json?latlng=${lat},${lng}&key=${billingMapKey}`)
+
+        return res.json(success('ok', JSON.parse(response.body)))
+
+    } catch (err) {
+        console.log(err)
+        return res.status(500).json(err)
+    }
+}
+
+module.exports = { searchPlace, placeDetails, latlngDetails }
