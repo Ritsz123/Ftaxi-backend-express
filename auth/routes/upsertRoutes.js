@@ -10,5 +10,5 @@ router.put('/rider/name/:email', verifyAuthenticationToken, upsertController.upd
 router.put('/rider/address/:email', verifyAuthenticationToken, upsertController.addRiderAddress)
 router.put('/driver/name/:email', verifyAuthenticationToken, upsertController.updateDriverName)
 router.put('/driver/status/:email', verifyAuthenticationToken, upsertController.updateDriverAvailability)
-router.put('/driver/vehicle/:email', verifyAuthenticationToken, upsertController.updateDriverVehicleDetails)
+router.put('/driver/vehicle', verifyAuthenticationToken, upsertController.updateDriverVehicleDetails)
 module.exports = router

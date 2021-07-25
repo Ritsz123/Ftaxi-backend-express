@@ -92,14 +92,15 @@ updateDriverAvailability = async (req, res) => {
 }
 
 updateDriverVehicleDetails = async (req, res) => {
-    const driver = await DriverModel.findOne({ email: req.userEmail })
+    var driver = await DriverModel.findOne({ email: req.userEmail })
     if (driver == null) {
         return res.json(failure(invalidToken))
     }
 
     const vehicle = {
         "reg_number": req.body.reg_number,
-        "model": req.body.model
+        "model": req.body.model,
+        "color": req.body.color
     }
 
     console.log(vehicle)
@@ -111,7 +112,8 @@ updateDriverVehicleDetails = async (req, res) => {
 
     console.log('update vehicle success', update)
 
-    res.status(201).json(success('success'))
+    driver = await DriverModel.findOne({ email: req.userEmail }, { password: 0 })
+    res.status(201).json(success('ok', driver))
 }
 
 module.exports = { updateRiderName, updateDriverName, addRiderAddress, updateDriverAvailability, updateDriverVehicleDetails }

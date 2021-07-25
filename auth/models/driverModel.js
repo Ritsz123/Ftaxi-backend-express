@@ -36,6 +36,7 @@ const driverSchema = mongoose.Schema({
     vehicle_details: {
         reg_number: String,
         model: String,
+        color: String,
         vehicle_verified: {
             type: Boolean,
             default: true
