@@ -13,7 +13,20 @@ mongoose.connect(process.env.MONGODB_URL, { useNewUrlParser: true, useUnifiedTop
 
 getUserDetails = async (req, res) => {
     //return data only of authorized users
-    const resp = await RiderModel.findOne({ email: req.userEmail }, { password: 0 })
+
+    const id = req.params.id
+    if (id != null) {
+        const rider = await RiderModel.findById(id, { password: 0 });
+        if (rider == null) {
+            return res.status(400).json(failure(`no user found wth id ${id}`))
+        }
+        return res.status(200).json(success('ok', rider))
+    }
+
+    var resp = await RiderModel.findOne({ email: req.userEmail }, { password: 0 })
+    if (resp == null) {
+        resp = await DriverModel.findOne({ email: req.userEmail }, { password: 0 })
+    }
     res.status(200).json(success('success', resp))
 }
 

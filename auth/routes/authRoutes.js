@@ -6,6 +6,8 @@ const authController = require('../controller/auth_controller')
 
 router.get('/getUserProfile', verifyAuthenticationToken, authController.getUserDetails)
 
+router.get('/getUserProfile/:id', verifyAuthenticationToken, authController.getUserDetails)
+
 router.post('/rider/register', authController.registerRider)
 
 router.post('/rider/login', authController.loginRider)
