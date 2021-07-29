@@ -11,4 +11,6 @@ router.put('/rider/address/:email', verifyAuthenticationToken, upsertController.
 router.put('/driver/name/:email', verifyAuthenticationToken, upsertController.updateDriverName)
 router.put('/driver/status/:email', verifyAuthenticationToken, upsertController.updateDriverAvailability)
 router.put('/driver/vehicle', verifyAuthenticationToken, upsertController.updateDriverVehicleDetails)
+router.put('/driver/fcmtoken', verifyAuthenticationToken, upsertController.updateFcmToken)
+
 module.exports = router

@@ -116,4 +116,25 @@ updateDriverVehicleDetails = async (req, res) => {
     res.status(201).json(success('ok', driver))
 }
 
-module.exports = { updateRiderName, updateDriverName, addRiderAddress, updateDriverAvailability, updateDriverVehicleDetails }
+updateFcmToken = async (req, res) => {
+    try {
+        const driver = await DriverModel.findOne({ email: req.userEmail });
+        if (driver == null) {
+            return res.status(400).json(failure('API only for drivers'))
+        }
+
+        const body = { 'fcmToken': req.body.fcmToken };
+
+        const updated = await DriverModel.updateOne(
+            { email: req.userEmail }, body
+        );
+
+        console.log('updated fcm token : ', updated)
+
+        res.status(200).json(success('ok', body))
+    } catch (e) {
+        console.log(e)
+    }
+}
+
+module.exports = { updateRiderName, updateDriverName, addRiderAddress, updateDriverAvailability, updateDriverVehicleDetails, updateFcmToken }

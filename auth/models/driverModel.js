@@ -28,6 +28,9 @@ const driverSchema = mongoose.Schema({
         type: Boolean,
         default: true
     },
+    fcmToken: {
+        type: String,
+    },
     ride_history: [{
         rider: mongoose.Types.ObjectId,
         source_address: addressModel,
