@@ -26,7 +26,7 @@ const driverSchema = mongoose.Schema({
     },
     available: {
         type: Boolean,
-        default: true
+        default: false
     },
     fcmToken: {
         type: String,
