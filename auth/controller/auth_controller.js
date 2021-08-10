@@ -120,4 +120,23 @@ async function emailExists(email) {
     return true
 }
 
-module.exports = { getUserDetails, registerRider, loginRider, registerDriver, loginDriver }
+getFcmToken = async (req, res) => {
+
+    const driverid = req.query.driverid;
+
+    console.log('get fcm ', driverid)
+
+    if (driverid == null) return res.status(400).json(failure('no driver id provided'))
+
+    try {
+        const fcmToken = await DriverModel.find({ _id: driverid }, { fcmToken: 1 })
+        if (fcmToken == null) return res.status(400).json(failure('invalid driver id'))
+
+        return res.status(200).json(success('ok', { 'fcmToken': fcmToken }))
+
+    } catch (e) {
+        return res.json(failure(e))
+    }
+}
+
+module.exports = { getUserDetails, registerRider, loginRider, registerDriver, loginDriver, getFcmToken }

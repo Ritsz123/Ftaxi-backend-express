@@ -8,6 +8,8 @@ router.get('/getUserProfile', verifyAuthenticationToken, authController.getUserD
 
 router.get('/getUserProfile/:id', verifyAuthenticationToken, authController.getUserDetails)
 
+router.get('/fcmtoken', verifyAuthenticationToken, authController.getFcmToken)
+
 router.post('/rider/register', authController.registerRider)
 
 router.post('/rider/login', authController.loginRider)

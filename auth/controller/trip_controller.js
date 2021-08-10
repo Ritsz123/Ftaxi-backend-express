@@ -74,7 +74,7 @@ addTripDetails = async (req, res) => {
 
     console.log('pushed data to driver', updatedDriver)
 
-    res.json(success('ok'))
+    res.status(201).json(success('success'))
 
 }
 
