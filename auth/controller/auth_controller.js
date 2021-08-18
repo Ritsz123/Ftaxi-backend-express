@@ -129,10 +129,10 @@ getFcmToken = async (req, res) => {
     if (driverid == null) return res.status(400).json(failure('no driver id provided'))
 
     try {
-        const fcmToken = await DriverModel.find({ _id: driverid }, { fcmToken: 1 })
+        const fcmToken = await DriverModel.findOne({ _id: driverid }, { fcmToken: 1 })
         if (fcmToken == null) return res.status(400).json(failure('invalid driver id'))
 
-        return res.status(200).json(success('ok', { 'fcmToken': fcmToken }))
+        return res.status(200).json(success('ok', fcmToken))
 
     } catch (e) {
         return res.json(failure(e))
