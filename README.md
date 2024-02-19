@@ -17,3 +17,9 @@ This Module is the part of complete project [**F - Taxi**](https://github.com/Ri
 - ExpressJS 🌐
 - MongoDB 🔥
 - GoogleMaps API 🗺
+
+### Tech Stack
+- Flutter 📱
+- ExpressJS 🌐
+- MongoDB 🔥
+- GoogleMaps API 🗺
