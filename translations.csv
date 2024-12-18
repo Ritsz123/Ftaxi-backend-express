@@ -1,23 +1,18 @@
-key,en,hi
-dailySummary,Daily Summary,दैनिक सारांश
-endDay,End Day,दिन खत्म करें
-startDay,Start Day,दिन शुरुआत करें
-noMenu,No Menu(s) to show,दिखाने का कोई मेन्यू नहीं
-noActivityFound,No Activity found,कोई कार्य नहीं किया
-startingDay,Starting day. Please Wait...,कृपया प्रतीक्षा करें...
-fetchingData,Fetching latest data...,नवीनतम डेटा हो रहा है ...
-endDayWarning,Are your sure you want to end day?,क्या अपना दिन निश्चित करना चाहते हैं?
-yes,Yes,हाँ
-no,No,नहीं
-getStarted,GET STARTED,शुरु करें
-intro1,Automate. Organise.,स्वचालित। व्यवस्थित
-intro2,Simplify.,सुगम
-intro3,Field Work Management made easy,फील्ड वर्क मैनेजमेंट को आसान बनाया
-login1,Welcome to Smbhav,वर्कोजी में आपका स्वागत है
-getOtp,ENTER OTP,ओटीपी दर्ज करें
-mobileNumber,Mobile Number,मोबाइल नंबर
-register,LOGIN,रजिस्टर करें
-loading,Loading...,कृपया प्रतीक्षा करें
-markNonWorking,Mark Non-Working,गैर-कार्य दिवस को चिह्नित करें
-captureVideo,Capture Video,वीडियो कैप्चर करें
-goodDay,Greetings,सुप्रभात
+key,en,hi,dailySummary,Daily Summary,दैनिक सारांश,endDay,End Day,दिन खत्म करें,startDay,Start Day,दिन शुरुआत करें,noMenu,No Menu(s) to show,दिखाने का कोई मेन्यू नहीं,noActivityFound,No Activity found,कोई कार्य नहीं किया,
+startingDay,Starting day. Please Wait...,कृपया प्रतीक्षा करें...,
+fetchingData,Fetching latest data...,नवीनतम डेटा हो रहा है ...,
+endDayWarning,Are your sure you want to end day?,क्या अपना दिन निश्चित करना चाहते हैं?,
+yes,Yes,हाँ,
+no,No,नहीं,
+getStarted,GET STARTED,शुरु करें,
+intro1,Automate. Organise.,स्वचालित। व्यवस्थित,
+intro2,Simplify.,सुगम,
+intro3,Field Work Management made easy,फील्ड वर्क मैनेजमेंट को आसान बनाया,
+login1,Welcome to Smbhav,वर्कोजी में आपका स्वागत है,
+getOtp,ENTER OTP,ओटीपी दर्ज करें,
+mobileNumber,Mobile Number,मोबाइल नंबर,
+register,LOGIN,रजिस्टर करें,
+loading,Loading...,कृपया प्रतीक्षा करें,
+markNonWorking,Mark Non-Working,गैर-कार्य दिवस को चिह्नित करें,
+captureVideo,Capture Video,वीडियो कैप्चर करें,
+goodDay,Greetings,सुप्रभात,
